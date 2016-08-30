@@ -35,6 +35,6 @@ So, no matter what your application is about, if you need to show pop-up notific
 - Transitions and more customizable options for the notification area.
 
 ##Do you want to use this in a production environment?
-It's come to my attention that there's been some enterprise-class projects that have included this library as one of their dependencies. This is why I've deployed an [official javadoc](http://dscore.webcindario.com/software/desktopnotify/javadoc).
+It has come to my attention that there's been some enterprise-class projects that have included this library as one of their dependencies. This is why I've deployed an [official javadoc](http://dscore.webcindario.com/software/desktopnotify/javadoc).
 
-If you're interested in using DS Desktop Notify and need some help/guidance with it, want to request a feature you need or submit a bug, you can send an e-mail to [the.drag.shot@gmail.com](mailto:the.drag.shot@gmail.com) with a subject that starts with **[Desktop Notify]**, or start a discussion here on GitHub.
+If you are interested in using DS Desktop Notify and need some help/guidance with it, want to request a feature you need or submit a bug, you can send an e-mail to [the.drag.shot@gmail.com](mailto:the.drag.shot@gmail.com) with a subject that starts with **[Desktop Notify]**, or start a discussion here on GitHub.
