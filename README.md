@@ -1,6 +1,10 @@
 # DS-Desktop-Notify
 ######A lightweight library that you can use in your Java-powered desktop apps to show floating notifications on the desktop.
 
+<p align="center">
+  <img src="http://dscore.webcindario.com/software/img/showcase/desktopnotify.png" alt="Preview"/>
+</p>
+
 Under development, this library allows to show small and stylish notifications on the Desktop. You, as developer, just need to add this tiny .jar to your classpath and invoke a single static method to create and display a new notification. As simple as the following:
 
 ```java
