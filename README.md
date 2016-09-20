@@ -1,4 +1,4 @@
-# DS-Desktop-Notify
+# DS-Desktop-Notify ![build passing](http://b.repl.ca/v1/build-passing-green.png) ![java-version 1.7](http://b.repl.ca/v1/java--version-1.7-blue.png) ![platform desktop](http://b.repl.ca/v1/platform-desktop-orange.png)
 ######A lightweight library that you can use in your Java-powered desktop apps to show floating notifications on the desktop.
 
 <p align="center">
