@@ -34,7 +34,7 @@ So, no matter what your application is about, if you need to show pop-up notific
 - Java Runtime Environment 6 or higher
 - Translucent windows support in AWT/Swing is recommended for best results (Java 7 or higher is needed for this).
 
-##Being developed
+## Being developed
 - The ability to spawn notifications from external processes via the command line (maybe to be added as a separate distributable).
 - Transitions and more customizable options for the notification area.
 
