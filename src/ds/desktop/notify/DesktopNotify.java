@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Main class of DS Desktop Notify. Use it to create and show notifications on
  * the Desktop.
- * @version 0.8
+ * @version 0.82
  * @author  DragShot
  */
 public class DesktopNotify {
@@ -250,18 +250,19 @@ public class DesktopNotify {
      * A String array with the lines of the title.
      * It is refreshed automatically when the title is set.
      */
-    String[] tlts=new String[0];
+    String[] tlts = new String[0];
     /**
      * A String array with the lines of the message.
      * It is refreshed automatically when the message is set.
      */
-    String[] msgs=new String[0];
+    String[] msgs = new String[0];
     
-    int w=0;
-    int h=0;
-    boolean visible=false;
+    int w = 0;
+    int h = 0;
+    boolean visible = false;
+    boolean markedForHide = false;
     
-    int highl= 0;
+    int highl = 0;
     
     long popupStart = 0L;
     long timeOut = 8000L;
@@ -346,7 +347,17 @@ public class DesktopNotify {
      * do it yourself.
      */
     public void show(){
+        markedForHide = false;
         DesktopNotifyDriver.postPane(this);
+    }
+    
+    /**
+     * Hides this notification immediately if it is already being displayed.
+     * The action itself is handled by the Driver, this method only marks this
+     * notification for hiding.
+     */
+    public void hide() {
+        markedForHide = true;
     }
     
     protected void setWidth(int w){

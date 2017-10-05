@@ -47,5 +47,14 @@ public class Demonstration {
 //                "This is a notification",
 //                "With DS Desktop Notify, displaying notifications on the screen is quick and easy!",
 //                DesktopNotify.SUCCESS);
+//        NotificationBuilder builder = new NotificationBuilder();
+//        builder.setTitle("Test notification");
+//        builder.setMessage("This notification will be manually hidden in 5 seconds.");
+//        builder.setType(DesktopNotify.SUCCESS);
+//        builder.setTimeOut(0);
+//        DesktopNotify notif = builder.build();
+//        notif.show();
+//        try { Thread.sleep(5000); } catch (InterruptedException ex) {}
+//        notif.hide();
     }
 }

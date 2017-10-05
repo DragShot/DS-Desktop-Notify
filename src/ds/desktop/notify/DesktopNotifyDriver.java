@@ -145,50 +145,60 @@ public final class DesktopNotifyDriver {
          * @param rd a graphics2D object received from the original paint event.
          */
         public void render(Graphics2D rd) {
-            finished=false;
-            int x=0,y=getHeight();
-            long l=System.currentTimeMillis();
-            if (windows.isEmpty()) finished=true;
-            int cur=Cursor.DEFAULT_CURSOR;
+            Point p = getMousePosition();
+            finished = false;
+            int x = 0, y = getHeight();
+            long l = System.currentTimeMillis();
+            if (windows.isEmpty()) finished = true;
+            int cur = Cursor.DEFAULT_CURSOR;
             if (!nativeTrans) rd.drawImage(bg, 0, 0, this);
-            for (int i=0;i<windows.size();i++) {
-                DesktopNotify window=windows.get(i);
+            for (int i = 0; i < windows.size(); i++) {
+                DesktopNotify window = windows.get(i);
                 if (window.isVisible()) {
-                    y-=window.h;
-                    if (window.popupStart==0)
-                        window.popupStart=System.currentTimeMillis();
-                    if (y>0) {
-                        boolean hover=false;
-                        Point p=getMousePosition();
-                        if (p!=null) {
-                            if (p.y>y && p.y<y+window.h) {
-                                hover=true;
-                                if (window.getAction()!=null)
-                                    cur=Cursor.HAND_CURSOR;
+                    y -= window.h;
+                    if (window.popupStart == 0) {
+                        window.popupStart = System.currentTimeMillis();
+                    }
+                    if (y > 0) {
+                        boolean hover = false;
+                        if (p != null) {
+                            if (p.y > y && p.y < y + window.h) {
+                                hover = true;
+                                if (window.getAction() != null) {
+                                    cur = Cursor.HAND_CURSOR;
+                                }
                                 if (clicked) {
-                                    if (window.getAction()!=null) {
-                                        final DesktopNotify w=window;
-                                        final long lf=l;
+                                    if (window.getAction() != null) {
+                                        final DesktopNotify w = window;
+                                        final long lf = l;
                                         java.awt.EventQueue.invokeLater(new Runnable(){@Override public void run(){
                                             w.getAction().actionPerformed(new ActionEvent(w, ActionEvent.ACTION_PERFORMED, "fireAction", lf, 0));
                                         }});
-                                    } if (window.expTime()==Long.MAX_VALUE) {
-                                        window.timeOut=l-window.popupStart+500;
+                                    }
+                                    if (window.expTime() == Long.MAX_VALUE) {
+                                        window.timeOut = l - window.popupStart + 500;
                                     }
                                 }
                             }
                         }
-                        window.render(x,y,hover,rd,l);
-                    } else window.popupStart=l;
-                    if (l>window.expTime()) {
+                        window.render(x, y, hover, rd, l);
+                        if (window.markedForHide) {
+                            window.timeOut = l - window.popupStart + 500;
+                            window.markedForHide = false;
+                        }
+                    } else {
+                        window.popupStart = l;
+                    }
+                    if (l > window.expTime() || (y <= 0 && window.markedForHide)) {
+                        window.markedForHide = false;
                         window.setVisible(false);
-                        windows.remove(window); 
+                        windows.remove(window);
                         i--;
                     }
-                    y-=5;
+                    y -= 5;
                 }
             }
-            clicked=false;
+            clicked = false;
             setCursor(new Cursor(cur));
         }
     }
