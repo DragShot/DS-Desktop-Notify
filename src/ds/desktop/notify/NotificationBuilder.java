@@ -46,6 +46,7 @@ public class NotificationBuilder {
     private String message;
     private Image icon;
     private int type;
+    private int orientation;
     private long timeOut;
     private ActionListener action;
     private NotifyTheme theme;
@@ -55,6 +56,7 @@ public class NotificationBuilder {
      */
     public NotificationBuilder() {
         type = DesktopNotify.DEFAULT;
+        orientation = DesktopNotify.defTextOrientation;
         timeOut = 0L;
     }
 
@@ -95,6 +97,19 @@ public class NotificationBuilder {
      */
     public NotificationBuilder setType(int type) {
         this.type = type;
+        return this;
+    }
+
+    /**
+     * Sets the prefered orientation of the text to be displayed, this
+     * determines the default text alignment.
+     * @param orientation The text orientation, either
+     *                    {@link DesktopNotify#LEFT_TO_RIGHT} or
+     *                    {@link DesktopNotify#RIGHT_TO_LEFT}.
+     * @return This builder, just to chain calls.
+     */
+    public NotificationBuilder setTextOrientation(int orientation) {
+        this.orientation = orientation;
         return this;
     }
 
@@ -143,7 +158,7 @@ public class NotificationBuilder {
         if (title == null && message == null)
             throw new IllegalStateException("The notification lacks of any "
                                           + "text to show!");
-        DesktopNotify pane = new DesktopNotify(title, message, type, icon);
+        DesktopNotify pane = new DesktopNotify(title, message, type, orientation, icon);
         pane.setTimeout(timeOut);
         pane.setAction(action);
         pane.setTheme(theme);

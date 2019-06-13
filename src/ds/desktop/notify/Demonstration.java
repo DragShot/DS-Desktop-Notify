@@ -56,5 +56,18 @@ public class Demonstration {
 //        notif.show();
 //        try { Thread.sleep(5000); } catch (InterruptedException ex) {}
 //        notif.hide();
+//        NotifyTheme theme = NotifyTheme.Dark;
+//        theme.titleFont = new java.awt.Font("Open Sans", java.awt.Font.BOLD, 14);
+//        theme.contentFont = new java.awt.Font("Open Sans", java.awt.Font.PLAIN, 12);
+//        NotificationBuilder builder = new NotificationBuilder();
+//        builder.setTitle("نص بسيط");
+//        builder.setMessage("هذا هو إشعار عينة. سوف تكون مخفية في 5 ثوان. هذا هو إشعار عينة. سوف تكون مخفية في 5 ثوان. هذا هو إشعار عينة. سوف تكون مخفية في 5 ثوان.");
+//        builder.setType(DesktopNotify.SUCCESS);
+//        builder.setTextOrientation(DesktopNotify.RIGHT_TO_LEFT);
+//        builder.setTimeOut(0);
+//        DesktopNotify notif = builder.build();
+//        notif.show();
+//        try { Thread.sleep(5000); } catch (InterruptedException ex) {}
+//        notif.hide();
     }
 }

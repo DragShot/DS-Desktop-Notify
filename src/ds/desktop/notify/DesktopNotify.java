@@ -18,45 +18,65 @@ import java.util.ArrayList;
 /**
  * Main class of DS Desktop Notify. Use it to create and show notifications on
  * the Desktop.
- * @version 0.82
+ * @version 0.85
  * @author  DragShot
  */
 public class DesktopNotify {
     //Some constants
-    public static final int DEFAULT=0;
-    public static final int INFORMATION=1;
-    public static final int WARNING=2;
-    public static final int ERROR=3;
-    public static final int HELP=4;
-    public static final int TIP=5;
-    public static final int INPUT_REQUEST=6;
-    public static final int SUCCESS=7;
-    public static final int FAIL=8;
+    public static final int DEFAULT = 0;
+    public static final int INFORMATION = 1;
+    public static final int WARNING = 2;
+    public static final int ERROR = 3;
+    public static final int HELP = 4;
+    public static final int TIP = 5;
+    public static final int INPUT_REQUEST = 6;
+    public static final int SUCCESS = 7;
+    public static final int FAIL = 8;
+
+    public static final int LEFT_TO_RIGHT = 0;
+    public static final int RIGHT_TO_LEFT = 1;
     
-    /* v0.8: This array is no longer used. Refer to NotifyTheme. */
-//    /**
-//     * This variable holds the default icons to be used.
-//     */
-//    public static final Image[] defaultIcons;
-//    
-//    static{
-//        defaultIcons=new Image[8];
-//        for(int i=0;i<defaultIcons.length;i++){
-//            defaultIcons[i]=new ImageIcon(DesktopNotify.class.getResource("img/"+(i+1)+".png")).getImage();
-//        }
-//    }
     private static NotifyTheme defTheme = NotifyTheme.Dark;
     
+    /**
+     * Sets the theme to use by default when creating notifications.
+     * @param theme The theme to use.
+     */
     public static void setDefaultTheme(NotifyTheme theme) {
         DesktopNotify.defTheme = theme;
     }
     
+    /**
+     * Gets the theme currently in use when creating notifications.
+     * @return The theme in use.
+     */
     public static NotifyTheme getDefaultTheme() {
         return DesktopNotify.defTheme;
     }
-    /* v0.8: END */
     
-    /* v0.8: Added an extra constructor for only Title and Message. */
+    protected static int defTextOrientation = LEFT_TO_RIGHT;
+
+    /**
+     * Gets the current default text orientation.
+     * @return The text orientation.
+     * @see #RIGHT_TO_LEFT
+     * @see #LEFT_TO_RIGHT
+     */
+    public static int getDefaultTextOrientation() {
+        return defTextOrientation;
+    }
+
+    /**
+     * Sets the default text orientation to use for new notifications. Useful
+     * for displaying languages that aren't read left-to-right.
+     * @param defTextOrientation The new text orientation.
+     * @see #RIGHT_TO_LEFT
+     * @see #LEFT_TO_RIGHT
+     */
+    public static void setDefaultTextOrientation(int defTextOrientation) {
+        DesktopNotify.defTextOrientation = defTextOrientation;
+    }
+    
     /**
      * Creates and shows a new notification. If there isn't an instance of the
      * DesktopNotifyDriver thread running, it will be created and started to
@@ -72,7 +92,6 @@ public class DesktopNotify {
     public static void showDesktopMessage(String title, String message) {
         showDesktopMessage(title, message, DEFAULT, null, null, 0);
     }
-    /* v0.8: END */
     
     /**
      * Creates and shows a new notification. If there isn't an instance of the
@@ -229,7 +248,7 @@ public class DesktopNotify {
      */
     public static void showDesktopMessage(String title, String message,
             int type, Image icon, ActionListener action, long maxTimeMillis) {
-        DesktopNotify pane=new DesktopNotify(title, message, type, icon);
+        DesktopNotify pane=new DesktopNotify(title, message, type, defTextOrientation, icon);
         pane.setTimeout(maxTimeMillis);
         pane.setAction(action);
         pane.show();
@@ -239,6 +258,7 @@ public class DesktopNotify {
     String message;
     Image icon;
     int type;
+    int orientation;
     
     /**
      * A <code>NotifyTheme</code> object with the color and Font parameters to
@@ -274,21 +294,26 @@ public class DesktopNotify {
     
     /**
      * A protected constructor for a DesktopNotify object, called internally.
-     * Use any of the <code>showDesktopMessage()</code> static methods to create
-     * and display a notification.
-     * @param title   The notification title. Can be <code>null</code> when the
-     *                notification isn't meant to have one.
-     * @param message The notification message. Can be <code>null</code> when
-     *                the notification isn't meant to have one.
-     * @param type    The notification type. Check the type contans in the class
-     *                to know which ones you can use.
-     * @param icon    The icon to display. Can be <code>null</code> when the
-     *                notification isn't meant to have one.
+     * You can use any of the <code>showDesktopMessage()</code> static methods
+     * or a {@link NotificationBuilder} in order to create and display a
+     * notification instead.
+     * @param title       The notification title. Can be {@code null} when the
+     *                    notification isn't meant to have one.
+     * @param message     The notification message. Can be {@code null} when
+     *                    the notification isn't meant to have one.
+     * @param orientation The text orientation, either {@link #LEFT_TO_RIGHT} or
+     *                    {@link #RIGHT_TO_LEFT}.
+     * @param type        The notification type. Check the type contans in the
+     *                    class for the ones you can use.
+     * @param icon        The icon to display. Can be {@code null} when the
+     *                    notification isn't meant to have one.
      */
-    protected DesktopNotify(String title, String message, int type, Image icon){
+    protected DesktopNotify(String title, String message, int type,
+            int orientation, Image icon){
         this.title = (title==null? "":title);
         this.message = (message==null? "":message);
         this.type = type;
+        this.orientation = orientation;
         this.icon = icon;
         this.theme = DesktopNotify.defTheme;
     }
@@ -335,11 +360,11 @@ public class DesktopNotify {
      * @param millis the timeout.
      */
     public void setTimeout(long millis){
-        timeOut = millis<0? 0:millis;
+        timeOut = millis < 0 ? 0 : millis;
     }
     
     protected long expTime(){
-        return timeOut==0? Long.MAX_VALUE:popupStart+timeOut;
+        return timeOut == 0 ? Long.MAX_VALUE : popupStart + timeOut;
     }
     
     /**
@@ -389,16 +414,16 @@ public class DesktopNotify {
      * @param l     The current time.
      */
     public void render(int x, int y, boolean hover, Graphics2D rd, long l) {
-        long i=l-popupStart;
-        if (i>500) i=expTime()-l;
-        if (i<0) i=0;
-        if (i>500) i=-1;
+        long i = l - popupStart;
+        if (i > 500) i = expTime()-l;
+        if (i < 0) i = 0;
+        if (i > 500) i = -1;
         rd.setRenderingHint(RenderingHints.KEY_TEXT_ANTIALIASING,
                 RenderingHints.VALUE_TEXT_ANTIALIAS_ON);
         AffineTransform trans=rd.getTransform();
         rd.translate(x, y);
-        if (i!=-1) {
-            double d=i/500.0;
+        if (i != -1) {
+            double d = i/500.0;
             rd.translate(w/2-((w/2)*d), h/2-((h/2)*d));
             rd.scale(d, d);
             rd.setComposite(AlphaComposite
@@ -422,17 +447,25 @@ public class DesktopNotify {
             if (!title.isEmpty()) {
                 rd.setColor(theme.titleColor);
                 rd.setFont(theme.titleFont);
-                for (int j=0;j<tlts.length;j++) {
-                    rd.drawString(tlts[j], 5+((icon==null && type==0)? 0:38),
-                            20+(titleH*j));
+                int tX = 5 + ((icon==null && type==0)? 0:38);
+                for (int j = 0; j < tlts.length; j++) {
+                    if (orientation == RIGHT_TO_LEFT) {
+                        FontMetrics ftm = DesktopNotifyDriver.getFontMetrics(theme.titleFont);
+                        tX = w - 4 - ((icon==null && type==0)? 0:38) - ftm.stringWidth(tlts[j]);
+                    }
+                    rd.drawString(tlts[j], tX, 20+(titleH*j));
                 }
             }
             if (!message.isEmpty()) {
                 rd.setColor(theme.contentColor);
                 rd.setFont(theme.contentFont);
-                for (int j=0;j<msgs.length;j++) {
-                    rd.drawString(msgs[j], 6+((icon==null && type==0)? 0:38),
-                            20+(titleH*tlts.length)+(textH*j));
+                int tX = 6 + ((icon==null && type==0)? 0:38);
+                for (int j = 0; j < msgs.length; j++) {
+                    if (orientation == RIGHT_TO_LEFT) {
+                        FontMetrics ftm = DesktopNotifyDriver.getFontMetrics(theme.contentFont);
+                        tX = w - 5 - ((icon==null && type==0)? 0:38) - ftm.stringWidth(msgs[j]);
+                    }
+                    rd.drawString(msgs[j], tX, 20+(titleH*tlts.length)+(textH*j));
                 }
             }
         }
@@ -441,10 +474,10 @@ public class DesktopNotify {
 //            rd.setColor(new Color(120,120,120));
 //            rd.drawString("X", w-16, 18);
 //        }
-        if (icon!=null) {
-            rd.drawImage(icon, 6, (h/2)-15, 32, 32, null);
-        } else if (type!=0) {
-            rd.drawImage(theme.iconSet[type-1], 6, (h/2)-15, 32, 32, null);
+        Image icon = this.icon == null ?
+                (type == 0 ? null : theme.iconSet[type-1]) : this.icon;
+        if (icon != null) {
+            rd.drawImage(icon, orientation == RIGHT_TO_LEFT ? (w - 7 - 32) : 6, (h/2)-15, 32, 32, null);
         }
         rd.setTransform(trans);
         rd.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER));
@@ -452,12 +485,12 @@ public class DesktopNotify {
     
     private int getLineHeight(Font font) {
         FontMetrics ftm = DesktopNotifyDriver.getFontMetrics(font);
-        return ftm.getHeight()-ftm.getLeading();
+        return ftm.getHeight() - ftm.getLeading();
     }
     
     /**
-     * Method which sorts the words of the texts in lines that fit
-     * inside the notification. It is called by the <code>DesktopNotifyDriver</code>.
+     * Splits the words of the text across lines that fit inside the
+     * notification. It is called by the {@link DesktopNotifyDriver}.
      */
     protected void sortMessage() {
         if (!title.isEmpty()) tlts = splitLines(title, theme.titleFont);
@@ -466,23 +499,17 @@ public class DesktopNotify {
                 + (getLineHeight(theme.contentFont)*msgs.length);
     }
     
-    /* v0.8: Let's reuse the builder instead of creating several of them. */
     private String[] splitLines(String in, Font font) {
         String[] out;
         ArrayList<String> list=new ArrayList();
         String[] strs=in.split("\n");
-        /* v0.8: START */
         StringBuilder builder = new StringBuilder();
-        /* v0.8: END */
         FontMetrics ftm = DesktopNotifyDriver.getFontMetrics(font);
         for(String str:strs){
-            /* v0.8: START */
-            //builder = new StringBuilder();
-            /* v0.8: END */
             String[] words=str.split(" ");
             for(String word:words){
-    //            System.out.println(str);
-    //            System.out.println(ftm.stringWidth(builder.toString())+"+"+ftm.stringWidth(str)+"<"+(w-10));
+                //System.out.println(str);
+                //System.out.println(ftm.stringWidth(builder.toString())+"+"+ftm.stringWidth(str)+"<"+(w-10));
                 if (ftm.stringWidth(builder.toString()) + ftm.stringWidth(word)
                         < (w-12-((icon==null && type==0)? 0:38))){
                     builder.append(word).append(" ");
@@ -492,11 +519,8 @@ public class DesktopNotify {
                 }
             }
             list.add(builder.toString());
-            /* v0.8: START */
             builder.setLength(0);
-            /* v0.8: END */
         }
-//        list.add(builder.toString());
         out = new String[list.size()];
         out = list.toArray(out);
         return out;
