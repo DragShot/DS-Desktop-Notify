@@ -51,7 +51,7 @@ public final class DesktopNotifyDriver {
         if(frame==null){
             boolean bool = JDialog.isDefaultLookAndFeelDecorated();
             JDialog.setDefaultLookAndFeelDecorated(false);
-            frame=new DesktopLayoutFrame();
+            frame = new DesktopLayoutFrame();
             JDialog.setDefaultLookAndFeelDecorated(bool);
         }
         if(!frame.isVisible()) frame.setVisible(true);
@@ -108,7 +108,7 @@ public final class DesktopNotifyDriver {
         public DesktopLayoutFrame() {
             super((JFrame)null,"DesktopLayoutFrame");
             setUndecorated(true);
-            nativeTrans=Utils.isTranslucencySupported();
+            nativeTrans = Utils.isTranslucencySupported();
             setBackground(new Color(0,0,0,nativeTrans? 0:255));
             setContentPane(new JComponent(){
                 @Override
@@ -119,7 +119,7 @@ public final class DesktopNotifyDriver {
             addMouseListener(new MouseAdapter() {
                 @Override
                 public void mouseClicked(MouseEvent evt){
-                    clicked=true;
+                    clicked = true;
                 }
             });
             setFocusableWindowState(false);
@@ -129,13 +129,13 @@ public final class DesktopNotifyDriver {
         
         @Override
         public void setVisible(boolean visible) {
-            boolean bool=isVisible();
+            boolean bool = isVisible();
             if (visible) {
                 Rectangle screenSize = Utils.getScreenSize();
                 setBounds(screenSize.x+screenSize.width-305, screenSize.y,
                           300, screenSize.height-5);
                 if (!bool && !nativeTrans)
-                    bg=Utils.getBackgroundCap(getBounds());
+                    bg = Utils.getBackgroundCap(getBounds());
             }
             super.setVisible(visible);
         }

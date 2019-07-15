@@ -18,7 +18,7 @@ import java.util.ArrayList;
 /**
  * Main class of DS Desktop Notify. Use it to create and show notifications on
  * the Desktop.
- * @version 0.85
+ * @version 0.9
  * @author  DragShot
  */
 public class DesktopNotify {
@@ -329,9 +329,8 @@ public class DesktopNotify {
      * Allows to set a <code>NotifyTheme</code> for this notification. One of
      * these defines stuff as the colors for text and background, the fonts and
      * even images for the default icons.
-     * @param theme 
+     * @param theme The <code>NotifyTheme</code> to use for this notification.
      */
-    /* v0.8: Nulls shall not freaking pass! */
     public void setTheme(NotifyTheme theme) {
         if (theme != null) this.theme = theme;
     }
@@ -397,8 +396,8 @@ public class DesktopNotify {
     }
 
     /**
-     * Used by he driver
-     * @param visible 
+     * Used by he driver to mark this notification as visible or not.
+     * @param visible {@code true} if the notification is currently visible.
      */
     protected void setVisible(boolean visible) {
         this.visible = visible;

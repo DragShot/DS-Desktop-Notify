@@ -2,4 +2,5 @@
 /build/
 /manifest.mf
 /build.xml
+/dist/javadoc
 /dist/README.TXT

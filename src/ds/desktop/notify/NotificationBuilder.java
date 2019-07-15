@@ -11,30 +11,30 @@ import java.awt.event.ActionListener;
  * Utilitary object that allows easy and flexible build of notifications that
  * fit any of your evil interests. For those who want to keep more control
  * on what their notifications show or didn't find any static method that did
- * the trick.<br/><br/>
- * <b>HOW-TO:</b><br/>
+ * the trick.<br><br>
+ * <b>HOW-TO:</b><br>
  * <ol>
- * <li>Instance an object of this class.<br/>
+ * <li>Instance an object of this class.<br>
  *     {@code NotificationBuilder builder = new NotificationBuilder();}</li>
- * <li>Append all the stuff you want into the builder. For instace:<br/>
- *     {@code builder.setTitle("My title").setMessage("Random message").setIcon(myIcon);}<br/>
+ * <li>Append all the stuff you want into the builder. For instace:<br>
+ *     {@code builder.setTitle("My title").setMessage("Random message").setIcon(myIcon);}<br>
  *     Just look at how easy is to chain calls with this thing.</li>
- * <li>Build your notification by calling {@link #build()}.<br/>
+ * <li>Build your notification by calling {@link #build()}.<br>
  *     {@code DesktopNotify notification = builder.build();}</li>
- * <li>When you're ready to show the notification, call {@link DesktopNotify#show()}.<br/>
- *     {@code notification.show();}<br/>
- *     You may prefer to chain the calls if you want to show it right now.<br/>
- *     {@code builder.build().show();}<br/>
+ * <li>When you're ready to show the notification, call {@link DesktopNotify#show()}.<br>
+ *     {@code notification.show();}<br>
+ *     You may prefer to chain the calls if you want to show it right now.<br>
+ *     {@code builder.build().show();}<br>
  *     Before you ask, yeah, you can spawn as many notifications as you please
  *     at this point, and they'll all look the same.</li>
  * <li>Once you're done, call {@link #reset()} to begin from scratch if you need
- *     to.<br/>
- *     {@code builder.reset();}<br/>
+ *     to.<br>
+ *     {@code builder.reset();}<br>
  *     There's the method {@link #buildAndReset()}, if you want to fetch your
- *     new notification and erase all the contents set in the builder.<br/>
- *     {@code DesktopNotify notification = builder.buildAndReset();}<br/>
+ *     new notification and erase all the contents set in the builder.<br>
+ *     {@code DesktopNotify notification = builder.buildAndReset();}<br>
  *     It works just like {@link #build()}, you can even chain calls with this.
- *     <br/>
+ *     <br>
  *     {@code builder.buildAndReset().show();}</li>
  * </ol>
  * This class is reusable and not thread-safe.
