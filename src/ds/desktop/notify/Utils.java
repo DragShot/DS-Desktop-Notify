@@ -158,7 +158,7 @@ public class Utils {
             Dimension size = Toolkit.getDefaultToolkit().getScreenSize();
             screen=new Rectangle(0, 0, size.width, size.height);
         }
-        System.out.println("Current workspace: "
+        DesktopNotify.logDebug("NotifyUtils", "Current workspace: "
                 +screen.width+"x"+screen.height+"px");
         return screen;
     }
@@ -173,7 +173,7 @@ public class Utils {
     public static boolean isTranslucencySupported(){
         boolean nativeTrans;
         if (System.getProperty("java.version").contains("1.6")) {
-            System.err.println("Per-pixel translucency is currently not "
+            DesktopNotify.logWarning("NotifyUtils", "Per-pixel translucency is currently not "
                     + "supported.\nPlease upgrade your JRE to at least Java 7 "
                     + "to support this feature.");
             nativeTrans = false;
@@ -183,8 +183,8 @@ public class Utils {
             GraphicsDevice gd = ge.getDefaultScreenDevice();
             if (!gd.isWindowTranslucencySupported(GraphicsDevice
                     .WindowTranslucency.PERPIXEL_TRANSLUCENT)) {
-                System.err.println("Error while starting: "
-                                 + "Per-pixel translucency is not supported.");
+                DesktopNotify.logError("NotifyUtils", "Error while starting: "
+                                 + "Per-pixel translucency is not supported.", null);
                 nativeTrans = false;
             } else nativeTrans = true;
         }
