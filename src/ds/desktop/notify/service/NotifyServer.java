@@ -4,6 +4,7 @@
  */
 package ds.desktop.notify.service;
 
+import ds.desktop.notify.DesktopNotify;
 import ds.desktop.notify.NotificationBuilder;
 import ds.desktop.notify.NotifyTheme;
 import java.io.BufferedReader;
@@ -44,13 +45,12 @@ public class NotifyServer extends NotifyService {
             server.bind(new InetSocketAddress("localhost", LISTENING_PORT), 50);
             alive = true;
         } catch (IOException ex) {
-            System.err.println("Unable to set up listen server!");
-            ex.printStackTrace();
+            DesktopNotify.logError("NotifyServer", "Unable to set up listen server!", ex);
             alive = false;
         }
         if (alive) {
             new Thread(new Runnable() { @Override public void run() {
-                System.out.println("Listen server started");
+                DesktopNotify.logInfo("NotifyServer", "Listen server started");
                 while (alive) {
                     try {
                         final Socket socket = server.accept();
@@ -144,12 +144,10 @@ public class NotifyServer extends NotifyService {
                     }
                 } catch (Exception ex) {
                     resp = "EXCEPTION " + ex.getClass() + " " + ex.getMessage();
-                    System.err.print("Exception during operation: ");
-                    ex.printStackTrace();
+                    DesktopNotify.logError("NotifyServer", "Exception during operation: ", ex);
                 } catch (Error err) {
                     resp = "SYSERROR " + err.getClass() + " " + err.getMessage();
-                    System.err.print("Error during operation: ");
-                    err.printStackTrace();
+                    DesktopNotify.logError("NotifyServer", "Error during operation: ", err);
                 } finally {
                     if (req != null) {
                         out.println(resp);
@@ -158,11 +156,9 @@ public class NotifyServer extends NotifyService {
                 }
             }
         } catch (Exception ex) {
-            System.err.print("Exception during connection: ");
-            ex.printStackTrace();
+            DesktopNotify.logError("NotifyServer", "Exception during connection: ", ex);
         } catch (Error err) {
-            System.err.print("Error during connection: ");
-            err.printStackTrace();
+            DesktopNotify.logError("NotifyServer", "Error during connection: ", err);
         }
     }
     
@@ -184,7 +180,7 @@ public class NotifyServer extends NotifyService {
             try {
                 server.close();
             } catch (Exception ex) {}
-            System.out.println("Listen server stopped");
+            DesktopNotify.logInfo("NotifyServer", "Listen server stopped");
         }
     }
     
