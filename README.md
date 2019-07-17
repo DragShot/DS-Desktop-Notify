@@ -25,7 +25,8 @@ So, no matter what your application is about, if you need to show pop-up notific
 - Create and show your notification with a single code line!
 - The notifications can be closed by mouse clicking, or have an specific time on screen.
 - They can wait on queue if there's no room to show them all.
-- Support for action events.
+- Action events for each notification.
+- Notifications can be posted from external processes via command line.
 - They won't mess with the taskbar in Windows PCs!
 - It leaves no traces: the service thread automatically stops when there are no more notifications to show. It is also started again when new notifications arrive.
 
@@ -35,10 +36,10 @@ So, no matter what your application is about, if you need to show pop-up notific
 - Translucent windows support in AWT/Swing is recommended for best results (Java 7 or higher is needed for this).
 
 ## Being developed
-- The ability to spawn notifications from external processes via the command line (maybe to be added as a separate distributable).
 - Transitions and more customizable options for the notification area.
+- Performance improvements.
 
 ## Do you want to use this in a production environment?
-It has come to my attention that there's been some enterprise-class projects that have included this library as one of their dependencies. This is why I've deployed an [official javadoc](http://dscore.webcindario.com/software/desktopnotify/javadoc).
+It has come to my attention that there's been some enterprise-class projects that have included this library as one of their dependencies. This is why I have deployed an [official javadoc](http://dscore.webcindario.com/software/desktopnotify/javadoc).
 
-If you are interested in using DS Desktop Notify and need some help/guidance with it, want to request a feature you need or submit a bug, you can send an e-mail to [the.drag.shot@gmail.com](mailto:the.drag.shot@gmail.com) with a subject that starts with **[Desktop Notify]**, or start a discussion here on GitHub.
+If you are interested in using DS Desktop Notify and need some help/guidance with it, want to request a feature you need or submit a bug, you can send an e-mail to [the.drag.shot@gmail.com](mailto:the.drag.shot@gmail.com) with a subject starting with **[Desktop Notify]**, or open an issue here on GitHub.
