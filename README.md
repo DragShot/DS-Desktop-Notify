@@ -1,4 +1,4 @@
-# DS-Desktop-Notify ![build passing](http://img.shields.io/badge/build-passing-green.png) ![java-version 1.7](http://img.shields.io/badge/java--version-1.7-blue.png?&logo=openjdk&logoColor=white) ![platform desktop](http://img.shields.io/badge/platform-desktop-orange.png)
+# DS-Desktop-Notify ![build passing](http://img.shields.io/badge/build-passing-green.png) ![platform desktop](http://img.shields.io/badge/platform-desktop-orange.png)
 ###### A lightweight library that you can embed in your Java-powered desktop apps to display floating notifications on the desktop.
 
 <p align="center">
@@ -32,7 +32,7 @@ So, no matter what your application is about, if you need to show pop-up notific
 
 ## Requirements
 - Windows XP/Vista/7/8/10, Linux, Mac-OS X
-- Java Runtime Environment 6 or higher
+- Java 8 or higher
 - Translucent windows support in AWT/Swing is recommended for best results (Java 7 or higher is needed for this).
 
 ## Being developed

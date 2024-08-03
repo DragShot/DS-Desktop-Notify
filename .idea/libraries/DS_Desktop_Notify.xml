@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="DS-Desktop-Notify">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/dist/DS-Desktop-Notify.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
